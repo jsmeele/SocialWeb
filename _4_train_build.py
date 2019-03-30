@@ -26,6 +26,7 @@ class trainBuild:
 		status = []
 
 		for index, row in self.data.iterrows():
+#			print(index)
 			text = row['STATUS']
 			attr = []
             
@@ -52,13 +53,15 @@ class trainBuild:
 		#status = filter(None, status)
 		## keep only english status, and clean the .csv file
 		label_delete = [i for i, v in enumerate(status) if not v]
-		print(label_delete)
+#		print(label_delete)
 		self.data.drop(label_delete, inplace = True)
 		self.data.to_csv('mp_extended.csv', index = False, header = False)
 		mat = [] ## store processed numerical vectors
 		for index, row in self.data.iterrows():
-			mat.append(status[index] + row[2:12].values.tolist())
-
+#			print(row[2:12].replace('n',0).replace('y',1))
+			mat.append(status[index] + row[2:12].replace('n',0).replace('y',1).values.tolist())
+#			print(status[index] + row[2:12].values.tolist())
+#		print(pd.DataFrame(mat))
 		pd.DataFrame(mat).to_csv('mp_trainset.csv', index = False, header = False)
 x = trainBuild()
 x.getValues()
