@@ -170,8 +170,9 @@ class preProcess:
                         
     #                    row.append([sum(x) for x in zip(*attr)])
     #                    row.append(values[word])
+                        print(row[17])
                         if row[17]:
-                            new.append(row[:16])
+                            new.append(row[:17])
 #                        print(row)
                     line_count += 1
     
