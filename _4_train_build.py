@@ -13,6 +13,7 @@ class trainBuild:
 		self.nrc_scores = {}
 		self.data = pd.DataFrame()
 		self.lemmatizer = nltk.stem.WordNetLemmatizer()
+		self.noWord = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 	def getValues(self):
 		nrc = pd.read_csv(self.nrc_processed, header = None, index_col = False)
@@ -34,11 +35,24 @@ class trainBuild:
 				word = self.lemmatizer.lemmatize(word)
 				if(word in self.nrc and word not in self.stop and word in self.nrc):
 					attr.append(self.nrc_scores[word])
-                    
+				else:
+					attr.append(self.noWord)
+			
 			status.append([sum(x) for x in zip(*attr)])
+#			print(status)
+#            tot = 0
+#			for tw in [sum(x) for x in zip(*attr)]:
+#                tweet.append(tw)
+#                tot = tot + tw
+#    
+#            if(tot > 0):
+#                tweet.append(True)
+#            else:
+#                tweet.append(False) 
 		#status = filter(None, status)
 		## keep only english status, and clean the .csv file
 		label_delete = [i for i, v in enumerate(status) if not v]
+		print(label_delete)
 		self.data.drop(label_delete, inplace = True)
 		self.data.to_csv('mp_extended.csv', index = False, header = False)
 		mat = [] ## store processed numerical vectors
