@@ -40,12 +40,12 @@ class trainBuild:
 		## keep only english status, and clean the .csv file
 		label_delete = [i for i, v in enumerate(status) if not v]
 		self.data.drop(label_delete, inplace = True)
-		self.data.to_csv('trainV1.csv', index = False, header = False)
+		self.data.to_csv('mp_extended.csv', index = False, header = False)
 		mat = [] ## store processed numerical vectors
 		for index, row in self.data.iterrows():
 			mat.append(status[index] + row[2:12].values.tolist())
 
-		pd.DataFrame(mat).to_csv('trainV2.csv', index = False, header = False)
+		pd.DataFrame(mat).to_csv('mp_trainset.csv', index = False, header = False)
 x = trainBuild()
 x.getValues()
 x.getStatusProcessed()
