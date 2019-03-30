@@ -29,7 +29,9 @@ class preProcess:
         self.textCol = 4
         self.csvTweets = 'raw-twitter2.csv'
         self.codec = 'utf-8'
-        self.process = "C:\\Users\\jssme\\OneDrive\\VU\\Master IS\\Social Web\\Twitter\\process\\"
+        self.root = ''
+        self.process = self.root + ''
+        self.nrc_processed = self.root + 'nrc.csv'
         self.cachedStopWords = nltk.corpus.stopwords.words('english')
         self.lemmatizer = nltk.stem.WordNetLemmatizer()
         self.wordList = []
@@ -55,7 +57,7 @@ class preProcess:
     
     ## get NRC word list and associated attributes
     def getValues(self):
-        nrc = pd.read_csv("C:\\Users\\jssme\\OneDrive\\VU\\Master IS\\Social Web\\Twitter\\better.csv", header = None, index_col = False)
+        nrc = pd.read_csv(self.nrc_processed, header = None, index_col = False)
         for index, row in nrc.iterrows():
             self.better[row[0]] = row[1:].values.tolist()
             self.wordList.append(row[0])
@@ -168,7 +170,8 @@ class preProcess:
                         
     #                    row.append([sum(x) for x in zip(*attr)])
     #                    row.append(values[word])
-                        new.append(row)
+                        if row[17]:
+                            new.append(row[:16])
 #                        print(row)
                     line_count += 1
     
